@@ -2,6 +2,7 @@ from datetime import datetime
 from flask_wtf import Form
 from wtforms import StringField, SelectField, SelectMultipleField, DateTimeField, BooleanField, ValidationError
 from wtforms.validators import DataRequired, AnyOf, URL, Length
+import re
 
 state_choices=[
             ('AL', 'AL'),
@@ -94,7 +95,8 @@ class ShowForm(Form):
 
 class VenueForm(Form):
     def validate_phone(form, field):
-        if not re.search(r"^[0-9]{3}-[0-9]{3}-[0-9]{4}$", field.data):
+        # if not re.search(r"^[0-9]{3}-[0-9]{3}-[0-9]{4}$", field.data):
+        if not re.search(r"^\+(?:[0-9]*?){6,14}[0-9]$", field.data):
             raise ValidationError("Invalid phone number")
 
     def validate_genres (form, field):
